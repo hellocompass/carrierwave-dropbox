@@ -44,8 +44,12 @@ module CarrierWave
         end
 
         def url
-          metadata, result = @client.get_temporary_link("/#{@path}")
-          result
+          begin
+            metadata, result = @client.get_temporary_link("/#{@path}")
+            result
+          rescue ::Dropbox::ApiError
+            ""
+          end
         end
 
         def delete
